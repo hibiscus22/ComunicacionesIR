@@ -1,0 +1,507 @@
+[
+    {
+        "id": "a3d876a67329d0bd",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a42053ce47238470",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "43ae38ea11cfb509",
+        "type": "ui_group",
+        "name": "Precios por litro",
+        "tab": "6816b8d54a7c4293",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "6816b8d54a7c4293",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "9e6f6c6feaae8d4c",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-dark",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#586e75",
+                "baseFont": "Georgia,Georgia,serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#729fcf",
+                "baseFont": "Times New Roman,Times,serif",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#097479",
+                    "value": "#729fcf",
+                    "edited": true
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#729fcf",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#abc6e2",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#555555",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#eeeeee",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#729fcf",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "Times New Roman,Times,serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "ddcf34f1ffaecb6a",
+        "type": "ui_group",
+        "name": "Precio por gasolinera",
+        "tab": "6816b8d54a7c4293",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "6efd974975c5fdeb",
+        "type": "http request",
+        "z": "a3d876a67329d0bd",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/FiltroMunicipio/259",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 490,
+        "y": 420,
+        "wires": [
+            [
+                "463a5238441cbf51",
+                "6c34e2c4b7cae377",
+                "9cdb1a09b695c094",
+                "cca1d737069cf01d"
+            ]
+        ]
+    },
+    {
+        "id": "59fd9847d5b02566",
+        "type": "inject",
+        "z": "a3d876a67329d0bd",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 420,
+        "wires": [
+            [
+                "6efd974975c5fdeb"
+            ]
+        ]
+    },
+    {
+        "id": "463a5238441cbf51",
+        "type": "function",
+        "z": "a3d876a67329d0bd",
+        "name": "",
+        "func": "//a = msg.payload.included[0].attributes.values[0].value;\n\naux = msg.payload.ListaEESSPrecio;\nprices = [];\n\nfor(var j in aux){\n    \n    a = aux[j][\"Precio Gasoleo A\"];\n    \n    //Replace string with comma with float\n    var b = \"\";\n    \n    if(a != \"\"){\n        for(let i = 0; i < a.length; i++){\n            if(a[i]==','){\n                b=b.concat('.');\n            }else{\n                b=b.concat(a[i]);\n            }\n        }\n        \n        prices.push(parseFloat(b));\n    }\n}\n \n msg.payload = Math.min.apply(null,prices);\n    \n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 440,
+        "wires": [
+            [
+                "277c0c1d8254f7da"
+            ]
+        ]
+    },
+    {
+        "id": "277c0c1d8254f7da",
+        "type": "ui_gauge",
+        "z": "a3d876a67329d0bd",
+        "name": "",
+        "group": "43ae38ea11cfb509",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Más barato Gasóleo A",
+        "label": "€/L",
+        "format": "{{value}}",
+        "min": "1",
+        "max": "2",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1000,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "6c34e2c4b7cae377",
+        "type": "function",
+        "z": "a3d876a67329d0bd",
+        "name": "",
+        "func": "//a = msg.payload.included[0].attributes.values[0].value;\n\naux = msg.payload.ListaEESSPrecio;\nprices = [];\n\nfor(var j in aux){\n    \n    a = aux[j][\"Precio Gasolina 95 E5\"];\n    \n    //Replace string with comma with float\n    var b = \"\";\n    \n    if(a != \"\"){\n        for(let i = 0; i < a.length; i++){\n            if(a[i]==','){\n                b=b.concat('.');\n            }else{\n                b=b.concat(a[i]);\n            }\n        }\n        \n        prices.push(parseFloat(b));\n    }\n}\n \n msg.payload = Math.min.apply(null,prices);\n    \n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 540,
+        "wires": [
+            [
+                "3498f9eae1e4a0d3"
+            ]
+        ]
+    },
+    {
+        "id": "3498f9eae1e4a0d3",
+        "type": "ui_gauge",
+        "z": "a3d876a67329d0bd",
+        "name": "",
+        "group": "43ae38ea11cfb509",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Más barato 95 E5",
+        "label": "€/L",
+        "format": "{{value}}",
+        "min": "1",
+        "max": "2",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 990,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "9cdb1a09b695c094",
+        "type": "function",
+        "z": "a3d876a67329d0bd",
+        "name": "",
+        "func": "aux = msg.payload.ListaEESSPrecio;\n\nseries = [];\ndata = [];\n\nfor(var i in aux){\n    series.push(aux[i][\"Rótulo\"]);\n    a = aux[i][\"Precio Gasoleo A\"]\n    var b = \"\";\n    for(let i = 0; i < a.length; i++){\n        if(a[i]==','){\n            b=b.concat('.');\n        }else{\n            b=b.concat(a[i]);\n        }\n    }\n    data.push([parseFloat(b)]);\n}\n\n//console.log(series)\n\nmsg.payload = [{\n\"series\": series,\n\"data\": data,\n\"labels\": [\"\"]\n}]\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 320,
+        "wires": [
+            [
+                "c4f9b37dd65a4040"
+            ]
+        ]
+    },
+    {
+        "id": "c4f9b37dd65a4040",
+        "type": "ui_chart",
+        "z": "a3d876a67329d0bd",
+        "name": "",
+        "group": "ddcf34f1ffaecb6a",
+        "order": 0,
+        "width": "12",
+        "height": "8",
+        "label": "Gasóleo A",
+        "chartType": "bar",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 990,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ba24bb952edd3b1d",
+        "type": "debug",
+        "z": "a3d876a67329d0bd",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "cca1d737069cf01d",
+        "type": "function",
+        "z": "a3d876a67329d0bd",
+        "name": "",
+        "func": "aux = msg.payload.ListaEESSPrecio;\n\nseries = [];\ndata = [];\n\nfor(var i in aux){\n    series.push(aux[i][\"Rótulo\"]);\n    a = aux[i][\"Precio Gasolina 95 E5\"]\n    var b = \"\";\n    if(a!=\"\"){\n        for(let i = 0; i < a.length; i++){\n            if(a[i]==','){\n                b=b.concat('.');\n            }else{\n                b=b.concat(a[i]);\n            }\n        }\n        data.push([parseFloat(b)]);\n    }\n}\n\n//console.log(series)\n\nmsg.payload = [{\n\"series\": series,\n\"data\": data,\n\"labels\": [\"\"]\n}]\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 240,
+        "wires": [
+            [
+                "3e61b6e63ff06d1c"
+            ]
+        ]
+    },
+    {
+        "id": "3e61b6e63ff06d1c",
+        "type": "ui_chart",
+        "z": "a3d876a67329d0bd",
+        "name": "",
+        "group": "ddcf34f1ffaecb6a",
+        "order": 0,
+        "width": "12",
+        "height": "8",
+        "label": "Gasolina",
+        "chartType": "bar",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 980,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0434a9af0de8f0bb",
+        "type": "ubidots_out",
+        "z": "a42053ce47238470",
+        "name": "",
+        "token": "BBFF-6aObRdO89Huuqupuu1Hyafg6tegYFH",
+        "label_device": "",
+        "device_label": "dasu",
+        "tier": "business",
+        "tls_checkbox": true,
+        "x": 770,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "958f096a2966b730",
+        "type": "inject",
+        "z": "a42053ce47238470",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 300,
+        "wires": [
+            [
+                "569cf7ade37ca2e8"
+            ]
+        ]
+    },
+    {
+        "id": "569cf7ade37ca2e8",
+        "type": "openweathermap",
+        "z": "a42053ce47238470",
+        "name": "",
+        "wtype": "current",
+        "lon": "",
+        "lat": "",
+        "city": "Santander",
+        "country": "Spain",
+        "language": "en",
+        "x": 510,
+        "y": 300,
+        "wires": [
+            [
+                "0434a9af0de8f0bb",
+                "58c7518892bc3961"
+            ]
+        ]
+    },
+    {
+        "id": "58c7518892bc3961",
+        "type": "debug",
+        "z": "a42053ce47238470",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 440,
+        "wires": []
+    }
+]
