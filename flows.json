@@ -1,19 +1,53 @@
 [
     {
+        "id": "a42053ce47238470",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": true,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "a3d876a67329d0bd",
         "type": "tab",
         "label": "Flow 1",
+        "disabled": true,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f5c46a261c9de788",
+        "type": "tab",
+        "label": "Flow 4",
         "disabled": false,
         "info": "",
         "env": []
     },
     {
-        "id": "a42053ce47238470",
-        "type": "tab",
-        "label": "Flow 2",
-        "disabled": false,
-        "info": "",
-        "env": []
+        "id": "d2073c06841229f9",
+        "type": "mqtt-broker",
+        "name": "raspi",
+        "broker": "192.168.10.144",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
     },
     {
         "id": "43ae38ea11cfb509",
@@ -142,6 +176,88 @@
         "collapse": false
     },
     {
+        "id": "a73c57745ba14481",
+        "type": "ui_tab",
+        "name": "Chelli",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "f90f6aad6aabc515",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "a73c57745ba14481",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "958f096a2966b730",
+        "type": "inject",
+        "z": "a42053ce47238470",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 300,
+        "wires": [
+            [
+                "569cf7ade37ca2e8"
+            ]
+        ]
+    },
+    {
+        "id": "569cf7ade37ca2e8",
+        "type": "openweathermap",
+        "z": "a42053ce47238470",
+        "name": "",
+        "wtype": "current",
+        "lon": "",
+        "lat": "",
+        "city": "Santander",
+        "country": "Spain",
+        "language": "en",
+        "x": 510,
+        "y": 300,
+        "wires": [
+            [
+                "58c7518892bc3961"
+            ]
+        ]
+    },
+    {
+        "id": "58c7518892bc3961",
+        "type": "debug",
+        "z": "a42053ce47238470",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 440,
+        "wires": []
+    },
+    {
         "id": "6efd974975c5fdeb",
         "type": "http request",
         "z": "a3d876a67329d0bd",
@@ -210,36 +326,8 @@
         "x": 740,
         "y": 440,
         "wires": [
-            [
-                "277c0c1d8254f7da"
-            ]
+            []
         ]
-    },
-    {
-        "id": "277c0c1d8254f7da",
-        "type": "ui_gauge",
-        "z": "a3d876a67329d0bd",
-        "name": "",
-        "group": "43ae38ea11cfb509",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "Más barato Gasóleo A",
-        "label": "€/L",
-        "format": "{{value}}",
-        "min": "1",
-        "max": "2",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "x": 1000,
-        "y": 440,
-        "wires": []
     },
     {
         "id": "6c34e2c4b7cae377",
@@ -255,36 +343,8 @@
         "x": 740,
         "y": 540,
         "wires": [
-            [
-                "3498f9eae1e4a0d3"
-            ]
+            []
         ]
-    },
-    {
-        "id": "3498f9eae1e4a0d3",
-        "type": "ui_gauge",
-        "z": "a3d876a67329d0bd",
-        "name": "",
-        "group": "43ae38ea11cfb509",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "Más barato 95 E5",
-        "label": "€/L",
-        "format": "{{value}}",
-        "min": "1",
-        "max": "2",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "x": 990,
-        "y": 540,
-        "wires": []
     },
     {
         "id": "9cdb1a09b695c094",
@@ -298,51 +358,6 @@
         "finalize": "",
         "libs": [],
         "x": 740,
-        "y": 320,
-        "wires": [
-            [
-                "c4f9b37dd65a4040"
-            ]
-        ]
-    },
-    {
-        "id": "c4f9b37dd65a4040",
-        "type": "ui_chart",
-        "z": "a3d876a67329d0bd",
-        "name": "",
-        "group": "ddcf34f1ffaecb6a",
-        "order": 0,
-        "width": "12",
-        "height": "8",
-        "label": "Gasóleo A",
-        "chartType": "bar",
-        "legend": "true",
-        "xformat": "HH:mm:ss",
-        "interpolate": "linear",
-        "nodata": "",
-        "dot": false,
-        "ymin": "",
-        "ymax": "",
-        "removeOlder": 1,
-        "removeOlderPoints": "",
-        "removeOlderUnit": "3600",
-        "cutout": 0,
-        "useOneColor": false,
-        "useUTC": false,
-        "colors": [
-            "#1f77b4",
-            "#aec7e8",
-            "#ff7f0e",
-            "#2ca02c",
-            "#98df8a",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "outputs": 1,
-        "useDifferentColor": false,
-        "x": 990,
         "y": 320,
         "wires": [
             []
@@ -378,121 +393,52 @@
         "x": 740,
         "y": 240,
         "wires": [
-            [
-                "3e61b6e63ff06d1c"
-            ]
-        ]
-    },
-    {
-        "id": "3e61b6e63ff06d1c",
-        "type": "ui_chart",
-        "z": "a3d876a67329d0bd",
-        "name": "",
-        "group": "ddcf34f1ffaecb6a",
-        "order": 0,
-        "width": "12",
-        "height": "8",
-        "label": "Gasolina",
-        "chartType": "bar",
-        "legend": "true",
-        "xformat": "HH:mm:ss",
-        "interpolate": "linear",
-        "nodata": "",
-        "dot": false,
-        "ymin": "",
-        "ymax": "",
-        "removeOlder": 1,
-        "removeOlderPoints": "",
-        "removeOlderUnit": "3600",
-        "cutout": 0,
-        "useOneColor": false,
-        "useUTC": false,
-        "colors": [
-            "#1f77b4",
-            "#aec7e8",
-            "#ff7f0e",
-            "#2ca02c",
-            "#98df8a",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "outputs": 1,
-        "useDifferentColor": false,
-        "x": 980,
-        "y": 240,
-        "wires": [
             []
         ]
     },
     {
-        "id": "0434a9af0de8f0bb",
-        "type": "ubidots_out",
-        "z": "a42053ce47238470",
+        "id": "2041661bdd1c5f6b",
+        "type": "mqtt in",
+        "z": "f5c46a261c9de788",
         "name": "",
-        "token": "BBFF-6aObRdO89Huuqupuu1Hyafg6tegYFH",
-        "label_device": "",
-        "device_label": "dasu",
-        "tier": "business",
-        "tls_checkbox": true,
-        "x": 770,
-        "y": 300,
+        "topic": "shellies/shellyem1/relay/0",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "d2073c06841229f9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 330,
+        "y": 320,
+        "wires": [
+            [
+                "e123104e62d5a0a9"
+            ]
+        ]
+    },
+    {
+        "id": "cefd199973d4b749",
+        "type": "mqtt out",
+        "z": "f5c46a261c9de788",
+        "name": "",
+        "topic": "shellies/shellyem1/relay/0/command",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d2073c06841229f9",
+        "x": 710,
+        "y": 460,
         "wires": []
     },
     {
-        "id": "958f096a2966b730",
-        "type": "inject",
-        "z": "a42053ce47238470",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 220,
-        "y": 300,
-        "wires": [
-            [
-                "569cf7ade37ca2e8"
-            ]
-        ]
-    },
-    {
-        "id": "569cf7ade37ca2e8",
-        "type": "openweathermap",
-        "z": "a42053ce47238470",
-        "name": "",
-        "wtype": "current",
-        "lon": "",
-        "lat": "",
-        "city": "Santander",
-        "country": "Spain",
-        "language": "en",
-        "x": 510,
-        "y": 300,
-        "wires": [
-            [
-                "0434a9af0de8f0bb",
-                "58c7518892bc3961"
-            ]
-        ]
-    },
-    {
-        "id": "58c7518892bc3961",
+        "id": "e123104e62d5a0a9",
         "type": "debug",
-        "z": "a42053ce47238470",
+        "z": "f5c46a261c9de788",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -501,8 +447,114 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 830,
-        "y": 440,
+        "x": 610,
+        "y": 320,
         "wires": []
+    },
+    {
+        "id": "0869a1e92ba9379f",
+        "type": "inject",
+        "z": "f5c46a261c9de788",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "on",
+        "payloadType": "str",
+        "x": 270,
+        "y": 460,
+        "wires": [
+            [
+                "cefd199973d4b749"
+            ]
+        ]
+    },
+    {
+        "id": "f033d3cfa3ccfe02",
+        "type": "mqtt in",
+        "z": "f5c46a261c9de788",
+        "d": true,
+        "name": "",
+        "topic": "prueba",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "d2073c06841229f9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 220,
+        "wires": [
+            [
+                "41e7ffcefcdbedc9"
+            ]
+        ]
+    },
+    {
+        "id": "41e7ffcefcdbedc9",
+        "type": "debug",
+        "z": "f5c46a261c9de788",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "e6897bfa49f996e8",
+        "type": "mqtt out",
+        "z": "f5c46a261c9de788",
+        "name": "",
+        "topic": "shellies/shellyem1/relay/0/command",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d2073c06841229f9",
+        "x": 710,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "3b3272fa8b12705d",
+        "type": "inject",
+        "z": "f5c46a261c9de788",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "off",
+        "payloadType": "str",
+        "x": 270,
+        "y": 560,
+        "wires": [
+            [
+                "e6897bfa49f996e8"
+            ]
+        ]
     }
 ]
