@@ -440,7 +440,7 @@
         "type": "debug",
         "z": "f5c46a261c9de788",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -556,5 +556,42 @@
                 "e6897bfa49f996e8"
             ]
         ]
+    },
+    {
+        "id": "12f9de8de438f8c0",
+        "type": "mqtt in",
+        "z": "f5c46a261c9de788",
+        "name": "",
+        "topic": "/clase/temperatura",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "d2073c06841229f9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 310,
+        "y": 400,
+        "wires": [
+            [
+                "75333b065ca7380f"
+            ]
+        ]
+    },
+    {
+        "id": "75333b065ca7380f",
+        "type": "debug",
+        "z": "f5c46a261c9de788",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 400,
+        "wires": []
     }
 ]
