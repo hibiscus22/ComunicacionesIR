@@ -562,7 +562,7 @@
         "type": "mqtt in",
         "z": "f5c46a261c9de788",
         "name": "",
-        "topic": "/clase/temperatura",
+        "topic": "/clase/humedad",
         "qos": "2",
         "datatype": "auto",
         "broker": "d2073c06841229f9",
@@ -570,7 +570,7 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 310,
+        "x": 300,
         "y": 400,
         "wires": [
             [
