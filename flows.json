@@ -1,21 +1,5 @@
 [
     {
-        "id": "a42053ce47238470",
-        "type": "tab",
-        "label": "Flow 2",
-        "disabled": true,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "a3d876a67329d0bd",
-        "type": "tab",
-        "label": "Flow 1",
-        "disabled": true,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "f5c46a261c9de788",
         "type": "tab",
         "label": "Flow 4",
@@ -194,209 +178,6 @@
         "collapse": false
     },
     {
-        "id": "958f096a2966b730",
-        "type": "inject",
-        "z": "a42053ce47238470",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 220,
-        "y": 300,
-        "wires": [
-            [
-                "569cf7ade37ca2e8"
-            ]
-        ]
-    },
-    {
-        "id": "569cf7ade37ca2e8",
-        "type": "openweathermap",
-        "z": "a42053ce47238470",
-        "name": "",
-        "wtype": "current",
-        "lon": "",
-        "lat": "",
-        "city": "Santander",
-        "country": "Spain",
-        "language": "en",
-        "x": 510,
-        "y": 300,
-        "wires": [
-            [
-                "58c7518892bc3961"
-            ]
-        ]
-    },
-    {
-        "id": "58c7518892bc3961",
-        "type": "debug",
-        "z": "a42053ce47238470",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 830,
-        "y": 440,
-        "wires": []
-    },
-    {
-        "id": "6efd974975c5fdeb",
-        "type": "http request",
-        "z": "a3d876a67329d0bd",
-        "name": "",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/FiltroMunicipio/259",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "senderr": false,
-        "x": 490,
-        "y": 420,
-        "wires": [
-            [
-                "463a5238441cbf51",
-                "6c34e2c4b7cae377",
-                "9cdb1a09b695c094",
-                "cca1d737069cf01d",
-                "ba24bb952edd3b1d"
-            ]
-        ]
-    },
-    {
-        "id": "59fd9847d5b02566",
-        "type": "inject",
-        "z": "a3d876a67329d0bd",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 200,
-        "y": 420,
-        "wires": [
-            [
-                "6efd974975c5fdeb"
-            ]
-        ]
-    },
-    {
-        "id": "463a5238441cbf51",
-        "type": "function",
-        "z": "a3d876a67329d0bd",
-        "name": "",
-        "func": "//a = msg.payload.included[0].attributes.values[0].value;\n\naux = msg.payload.ListaEESSPrecio;\nprices = [];\n\nfor(var j in aux){\n    \n    a = aux[j][\"Precio Gasoleo A\"];\n    \n    //Replace string with comma with float\n    var b = \"\";\n    \n    if(a != \"\"){\n        for(let i = 0; i < a.length; i++){\n            if(a[i]==','){\n                b=b.concat('.');\n            }else{\n                b=b.concat(a[i]);\n            }\n        }\n        \n        prices.push(parseFloat(b));\n    }\n}\n \n msg.payload = Math.min.apply(null,prices);\n    \n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 740,
-        "y": 440,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "6c34e2c4b7cae377",
-        "type": "function",
-        "z": "a3d876a67329d0bd",
-        "name": "",
-        "func": "//a = msg.payload.included[0].attributes.values[0].value;\n\naux = msg.payload.ListaEESSPrecio;\nprices = [];\n\nfor(var j in aux){\n    \n    a = aux[j][\"Precio Gasolina 95 E5\"];\n    \n    //Replace string with comma with float\n    var b = \"\";\n    \n    if(a != \"\"){\n        for(let i = 0; i < a.length; i++){\n            if(a[i]==','){\n                b=b.concat('.');\n            }else{\n                b=b.concat(a[i]);\n            }\n        }\n        \n        prices.push(parseFloat(b));\n    }\n}\n \n msg.payload = Math.min.apply(null,prices);\n    \n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 740,
-        "y": 540,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "9cdb1a09b695c094",
-        "type": "function",
-        "z": "a3d876a67329d0bd",
-        "name": "",
-        "func": "aux = msg.payload.ListaEESSPrecio;\n\nseries = [];\ndata = [];\n\nfor(var i in aux){\n    series.push(aux[i][\"Rótulo\"]);\n    a = aux[i][\"Precio Gasoleo A\"]\n    var b = \"\";\n    for(let i = 0; i < a.length; i++){\n        if(a[i]==','){\n            b=b.concat('.');\n        }else{\n            b=b.concat(a[i]);\n        }\n    }\n    data.push([parseFloat(b)]);\n}\n\n//console.log(series)\n\nmsg.payload = [{\n\"series\": series,\n\"data\": data,\n\"labels\": [\"\"]\n}]\n\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 740,
-        "y": 320,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "ba24bb952edd3b1d",
-        "type": "debug",
-        "z": "a3d876a67329d0bd",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 730,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "cca1d737069cf01d",
-        "type": "function",
-        "z": "a3d876a67329d0bd",
-        "name": "",
-        "func": "aux = msg.payload.ListaEESSPrecio;\n\nseries = [];\ndata = [];\n\nfor(var i in aux){\n    series.push(aux[i][\"Rótulo\"]);\n    a = aux[i][\"Precio Gasolina 95 E5\"]\n    var b = \"\";\n    if(a!=\"\"){\n        for(let i = 0; i < a.length; i++){\n            if(a[i]==','){\n                b=b.concat('.');\n            }else{\n                b=b.concat(a[i]);\n            }\n        }\n        data.push([parseFloat(b)]);\n    }\n}\n\n//console.log(series)\n\nmsg.payload = [{\n\"series\": series,\n\"data\": data,\n\"labels\": [\"\"]\n}]\n\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 740,
-        "y": 240,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "2041661bdd1c5f6b",
         "type": "mqtt in",
         "z": "f5c46a261c9de788",
@@ -440,7 +221,7 @@
         "type": "debug",
         "z": "f5c46a261c9de788",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -592,6 +373,111 @@
         "statusType": "auto",
         "x": 610,
         "y": 400,
+        "wires": []
+    },
+    {
+        "id": "fab864a7988567cb",
+        "type": "mqtt in",
+        "z": "f5c46a261c9de788",
+        "name": "",
+        "topic": "shellies/shellyem1/emeter/0/power",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "d2073c06841229f9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 260,
+        "y": 680,
+        "wires": [
+            [
+                "05b323a4b56fc9ac"
+            ]
+        ]
+    },
+    {
+        "id": "05b323a4b56fc9ac",
+        "type": "function",
+        "z": "f5c46a261c9de788",
+        "name": "",
+        "func": "\n\nconsumo = consumo + tiempo*msg.payload;\n\nmsg.payload = consumo;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n\nconsumo = 0;\ntiempo = 10;",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 680,
+        "wires": [
+            [
+                "f7fca57e2191c682",
+                "92e26f17a7274699"
+            ]
+        ]
+    },
+    {
+        "id": "f7fca57e2191c682",
+        "type": "ui_gauge",
+        "z": "f5c46a261c9de788",
+        "name": "",
+        "group": "f90f6aad6aabc515",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 1090,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "92e26f17a7274699",
+        "type": "function",
+        "z": "f5c46a261c9de788",
+        "name": "",
+        "func": "\n\nif(msg.payload > max_consumo)\n    msg.payload = \"on\";\nelse\n    msg.payload = \"off\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 760,
+        "wires": [
+            [
+                "ae2bb9c40ecae887"
+            ]
+        ]
+    },
+    {
+        "id": "ae2bb9c40ecae887",
+        "type": "mqtt out",
+        "z": "f5c46a261c9de788",
+        "name": "",
+        "topic": "shellies/shellyem1/relay/0/command",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d2073c06841229f9",
+        "x": 1030,
+        "y": 760,
         "wires": []
     }
 ]
