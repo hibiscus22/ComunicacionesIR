@@ -182,7 +182,7 @@
         "tab": "a73c57745ba14481",
         "order": 1,
         "disp": true,
-        "width": "6",
+        "width": 9,
         "collapse": false
     },
     {
@@ -204,6 +204,17 @@
         "disp": true,
         "width": "6",
         "collapse": false
+    },
+    {
+        "id": "d8c7f3a31e230d89",
+        "type": "ui_group",
+        "name": "World map",
+        "tab": "a73c57745ba14481",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "2041661bdd1c5f6b",
@@ -249,7 +260,7 @@
         "type": "debug",
         "z": "f5c46a261c9de788",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -392,7 +403,7 @@
         "type": "debug",
         "z": "f5c46a261c9de788",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -432,15 +443,15 @@
         "z": "f5c46a261c9de788",
         "name": "",
         "group": "f90f6aad6aabc515",
-        "order": 0,
+        "order": 1,
         "width": 0,
         "height": 0,
         "gtype": "gage",
         "title": "Potencia Real",
-        "label": "units",
+        "label": "Watts",
         "format": "{{value}}",
         "min": 0,
-        "max": 10,
+        "max": "5",
         "colors": [
             "#00b500",
             "#e6e600",
@@ -464,8 +475,8 @@
         "initialize": "// Code added here will be run once\n// whenever the node is started.\n\nmax_consumo = 10; // 10 W",
         "finalize": "",
         "libs": [],
-        "x": 840,
-        "y": 760,
+        "x": 800,
+        "y": 740,
         "wires": [
             [
                 "ae2bb9c40ecae887"
@@ -487,7 +498,7 @@
         "expiry": "",
         "broker": "d2073c06841229f9",
         "x": 1150,
-        "y": 760,
+        "y": 740,
         "wires": []
     },
     {
@@ -499,8 +510,8 @@
         "stopthreshold": "2",
         "startafter": 1,
         "stopafter": "2",
-        "x": 590,
-        "y": 1100,
+        "x": 610,
+        "y": 840,
         "wires": [
             [
                 "91f251bf39cc3ae8"
@@ -513,7 +524,7 @@
         "z": "f5c46a261c9de788",
         "name": "",
         "group": "f90f6aad6aabc515",
-        "order": 1,
+        "order": 2,
         "width": 0,
         "height": 0,
         "label": "Consumo",
@@ -545,8 +556,8 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 1180,
-        "y": 1100,
+        "x": 1200,
+        "y": 840,
         "wires": [
             []
         ]
@@ -562,13 +573,229 @@
         "initialize": "// Code added here will be run once\n// whenever the node is started.\n\n\nseries = [];\ndata = [];",
         "finalize": "",
         "libs": [],
-        "x": 890,
-        "y": 1100,
+        "x": 910,
+        "y": 840,
         "wires": [
             [
                 "810e801a12ff1584"
             ]
         ]
+    },
+    {
+        "id": "c0f4d56faac1a741",
+        "type": "comment",
+        "z": "f5c46a261c9de788",
+        "name": "Eqk_article",
+        "info": "https://developer.ibm.com/tutorials/simple-earthquake-monitoring-system-using-nodered/",
+        "x": 240,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "be23300d3fd3b8f3",
+        "type": "http request",
+        "z": "f5c46a261c9de788",
+        "name": "Eq",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 370,
+        "y": 1000,
+        "wires": [
+            [
+                "e3d039827cbaf3f0"
+            ]
+        ]
+    },
+    {
+        "id": "06cb06bc6e42f908",
+        "type": "inject",
+        "z": "f5c46a261c9de788",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 1000,
+        "wires": [
+            [
+                "be23300d3fd3b8f3"
+            ]
+        ]
+    },
+    {
+        "id": "e3d039827cbaf3f0",
+        "type": "change",
+        "z": "f5c46a261c9de788",
+        "name": "Info eq",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "topic",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "headers",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "statusCode",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "url",
+                "pt": "msg"
+            },
+            {
+                "t": "delete",
+                "p": "followRedirects",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 1000,
+        "wires": [
+            [
+                "c4cbf4f15a2a226e"
+            ]
+        ]
+    },
+    {
+        "id": "c4cbf4f15a2a226e",
+        "type": "function",
+        "z": "f5c46a261c9de788",
+        "name": "Parse",
+        "func": "len = msg.payload.features.length\n\nb = [];\n\nfor(let i = 0; i < len; i++){\n    a = msg.payload.features[i].geometry.coordinates;\n    a.pop();\n    a.push(msg.payload.features[i].properties.mag);\n    a = { \"name\":a[2], \"lat\":a[1], \"lon\":a[0] };\n    b.push(a);\n}\n\n\nmsg.payload = b;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1000,
+        "wires": [
+            [
+                "235648b2d6736ad7",
+                "4f656cf6cf9ec2b2"
+            ]
+        ]
+    },
+    {
+        "id": "235648b2d6736ad7",
+        "type": "ui_worldmap",
+        "z": "f5c46a261c9de788",
+        "group": "d8c7f3a31e230d89",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "lat": "38",
+        "lon": "-100",
+        "zoom": "4",
+        "layer": "OSMG",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "hide",
+        "layers": "hide",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "true",
+        "coords": "none",
+        "showgrid": "false",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "overlist": "DR,CO,RA,DN,HM",
+        "maplist": "OSMG,OSMC,EsriC,EsriS,EsriT,EsriDG,UKOS",
+        "mapname": "",
+        "mapurl": "",
+        "mapopt": "",
+        "mapwms": false,
+        "x": 960,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "4f656cf6cf9ec2b2",
+        "type": "function",
+        "z": "f5c46a261c9de788",
+        "name": "Cortar luz riesgo terremoto",
+        "func": "len = msg.payload.length\n\n\nfor(let i=0; i<len; i++){\n    lon = Math.abs(msg.payload[i].lon -lon1);\n    la2 = msg.payload[i].lat;\n    if(Math.acos(Math.sin(la1)*Math.sin(la2) + Math.cos(la1)*Math.cos(la2)*Math.cos(lon))*R < 100){\n        shelly = \"off\";\n    }else{\n        shelly = \"on\"\n    }\n}\nmsg.payload = shelly;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nla1 = 62;\nlon1 = -150;\nR = 6371;\n",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 1000,
+        "wires": [
+            [
+                "3349962431e709c7",
+                "2cad5cc818f8c34a"
+            ]
+        ]
+    },
+    {
+        "id": "3349962431e709c7",
+        "type": "debug",
+        "z": "f5c46a261c9de788",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1270,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "2cad5cc818f8c34a",
+        "type": "mqtt out",
+        "z": "f5c46a261c9de788",
+        "name": "",
+        "topic": "shellies/shellyem1/relay/0/command",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d2073c06841229f9",
+        "x": 1350,
+        "y": 1000,
+        "wires": []
     },
     {
         "id": "efbbc849453a7b1a",
