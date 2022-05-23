@@ -605,7 +605,7 @@
         "proxy": "",
         "authType": "",
         "senderr": false,
-        "x": 370,
+        "x": 330,
         "y": 1000,
         "wires": [
             [
@@ -679,7 +679,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 550,
+        "x": 490,
         "y": 1000,
         "wires": [
             [
@@ -698,7 +698,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 750,
+        "x": 670,
         "y": 1000,
         "wires": [
             [
@@ -738,7 +738,7 @@
         "mapurl": "",
         "mapopt": "",
         "mapwms": false,
-        "x": 960,
+        "x": 900,
         "y": 1100,
         "wires": []
     },
@@ -747,18 +747,18 @@
         "type": "function",
         "z": "f5c46a261c9de788",
         "name": "Cortar luz riesgo terremoto",
-        "func": "len = msg.payload.length\n\n\nfor(let i=0; i<len; i++){\n    lon = Math.abs(msg.payload[i].lon -lon1);\n    la2 = msg.payload[i].lat;\n    if(Math.acos(Math.sin(la1)*Math.sin(la2) + Math.cos(la1)*Math.cos(la2)*Math.cos(lon))*R < 100){\n        shelly = \"off\";\n    }else{\n        shelly = \"on\"\n    }\n}\nmsg.payload = shelly;\nreturn msg;",
+        "func": "len = msg.payload.length\n\n\nfor(let i=0; i<len; i++){\n    \n    la2 = msg.payload[i].lat;\n    lon2 = msg.payload[i].lon;\n    \n    phi1 = la1 * Math.PI/180, phi2 = la2 * Math.PI/180, lambda = (lon2-lon1) * Math.PI/180;\n    d = Math.acos( Math.sin(phi1)*Math.sin(phi2) + Math.cos(phi1)*Math.cos(phi2) * Math.cos(lambda) ) * R;\n    if(d < 100){\n        shelly = \"off\";\n    }else{\n        shelly = \"on\"\n    }\n}\nmsg.payload = shelly;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "// Code added here will be run once\n// whenever the node is started.\nla1 = 62;\nlon1 = -150;\nR = 6371;\n",
         "finalize": "",
         "libs": [],
-        "x": 1020,
+        "x": 940,
         "y": 1000,
         "wires": [
             [
-                "3349962431e709c7",
-                "2cad5cc818f8c34a"
+                "2cad5cc818f8c34a",
+                "3349962431e709c7"
             ]
         ]
     },
@@ -775,8 +775,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1270,
-        "y": 1060,
+        "x": 1210,
+        "y": 1080,
         "wires": []
     },
     {
@@ -793,7 +793,7 @@
         "correl": "",
         "expiry": "",
         "broker": "d2073c06841229f9",
-        "x": 1350,
+        "x": 1250,
         "y": 1000,
         "wires": []
     },
