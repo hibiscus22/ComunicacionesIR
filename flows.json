@@ -747,7 +747,7 @@
         "type": "function",
         "z": "f5c46a261c9de788",
         "name": "Cortar luz riesgo terremoto",
-        "func": "len = msg.payload.length\n\n\nfor(let i=0; i<len; i++){\n    \n    la2 = msg.payload[i].lat;\n    lon2 = msg.payload[i].lon;\n    \n    phi1 = la1 * Math.PI/180, phi2 = la2 * Math.PI/180, lambda = (lon2-lon1) * Math.PI/180;\n    d = Math.acos( Math.sin(phi1)*Math.sin(phi2) + Math.cos(phi1)*Math.cos(phi2) * Math.cos(lambda) ) * R;\n    if(d < 100){\n        shelly = \"off\";\n    }else{\n        shelly = \"on\"\n    }\n}\nmsg.payload = shelly;\nreturn msg;",
+        "func": "len = msg.payload.length\n\n\nfor(let i=0; i<len; i++){\n    \n    // Latitude and longitude\n    la2 = msg.payload[i].lat;\n    lon2 = msg.payload[i].lon;\n    \n    // Angles to radians\n    phi1 = la1 * Math.PI/180, phi2 = la2 * Math.PI/180, lambda = (lon2-lon1) * Math.PI/180;\n    // Main formula\n    d = Math.acos( Math.sin(phi1)*Math.sin(phi2) + Math.cos(phi1)*Math.cos(phi2) * Math.cos(lambda) ) * R;\n    if(d < 100){\n        shelly = \"off\";\n    }else{\n        shelly = \"on\"\n    }\n}\nmsg.payload = shelly;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "// Code added here will be run once\n// whenever the node is started.\nla1 = 62;\nlon1 = -150;\nR = 6371;\n",
